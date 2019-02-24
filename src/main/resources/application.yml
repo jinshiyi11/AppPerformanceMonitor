@@ -1,0 +1,16 @@
+﻿server:
+  port: 80
+spring:
+  profiles:
+    active: dev
+  aop:
+    auto: true
+  datasource:
+        driver-class-nickName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/stack?useUnicode=true&characterEncoding=utf-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        username: stack_user
+        password: test321
+
+# Mybatis配置
+mybatis:
+    mapperLocations: classpath:mapper/*.xml
