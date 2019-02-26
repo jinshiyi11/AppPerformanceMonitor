@@ -1,7 +1,9 @@
 package com.seagle.performance.performance.api;
 
-import com.seagle.performance.performance.entity.BlockInfo;
+import com.seagle.performance.performance.entity.ResponseBlockInfo;
+import com.seagle.performance.performance.entity.UploadBlockInfo;
 import com.seagle.performance.performance.mapper.DbMapper;
+import com.seagle.performance.performance.entity.ResponseBlockInfoList;
 import com.seagle.performance.performance.response.ErrorCode;
 import com.seagle.performance.performance.response.ResponseInfo;
 import com.seagle.performance.performance.util.StackTraceUtil;
@@ -11,15 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
  *
  */
 @RestController
-public class UploadStackTraceController {
+public class BlockController {
     private static final int PAGE_COUNT = 30;
 
     @Autowired
@@ -33,7 +33,7 @@ public class UploadStackTraceController {
             @RequestParam("blockTime") int blockTime,
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        BlockInfo blockInfo = new BlockInfo();
+        UploadBlockInfo blockInfo = new UploadBlockInfo();
         String key = StackTraceUtil.generateStackTrackKey(stackTrace);
         blockInfo.setKey(key);
         blockInfo.setStackTrace(stackTrace);
@@ -43,20 +43,23 @@ public class UploadStackTraceController {
     }
 
     @RequestMapping("api/getBlockInfoList")
-    public ResponseInfo<List<BlockInfo>> getBlockInfoList(
-            @RequestParam(value = "id", required = false, defaultValue = "-1") long id) {
-        if (id < 0) {
-            id = 0x7FFFFFFF;
+    public ResponseInfo<ResponseBlockInfoList> getBlockInfoList(
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        // page从0开始
+        page = page - 1;
+        if (page < 0) {
+            page = 0;
         }
 
 
-        List<BlockInfo> data = mMapper.getBlockInfoList(id, PAGE_COUNT);
+        int count = mMapper.getBlockInfoCount();
+        List<ResponseBlockInfo> data = mMapper.getBlockInfoList(page * PAGE_COUNT, PAGE_COUNT);
 //        if (data != null) {
 //            Collections.reverse(data);
 //        }
 
-        ResponseInfo<List<BlockInfo>> result = new ResponseInfo<>();
-        result.setData(data);
+        ResponseInfo<ResponseBlockInfoList> result = new ResponseInfo<>();
+        result.setData(new ResponseBlockInfoList(count, data));
         return result;
     }
 }

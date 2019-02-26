@@ -3,7 +3,7 @@ package com.seagle.performance.performance.entity;
 /**
  *
  */
-public class BlockInfo {
+public class UploadBlockInfo {
     private long mId;
     private String mKey;
     private String mStackTrace;
