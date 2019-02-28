@@ -1,9 +1,7 @@
 package com.seagle.performance.performance.api;
 
-import com.seagle.performance.performance.entity.ResponseBlockInfo;
-import com.seagle.performance.performance.entity.UploadBlockInfo;
+import com.seagle.performance.performance.entity.*;
 import com.seagle.performance.performance.mapper.DbMapper;
-import com.seagle.performance.performance.entity.ResponseBlockInfoList;
 import com.seagle.performance.performance.response.ErrorCode;
 import com.seagle.performance.performance.response.ResponseInfo;
 import com.seagle.performance.performance.util.StackTraceUtil;
@@ -20,7 +18,7 @@ import java.util.List;
  */
 @RestController
 public class BlockController {
-    private static final int PAGE_COUNT = 30;
+    private static final int PAGE_COUNT = 10;
 
     @Autowired
     private DbMapper mMapper;
@@ -60,6 +58,29 @@ public class BlockController {
 
         ResponseInfo<ResponseBlockInfoList> result = new ResponseInfo<>();
         result.setData(new ResponseBlockInfoList(count, data));
+        return result;
+    }
+
+    @RequestMapping("api/getBlockDetailList")
+    public ResponseInfo<ResponseBlockDetailList> getBlockDetailList(
+            @RequestParam(value = "id") int id,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        // page从0开始
+        page = page - 1;
+        if (page < 0) {
+            page = 0;
+        }
+
+
+        String key = mMapper.getBlockKey(id);
+        int count = mMapper.getBlockInfoCountByKey(key);
+        List<ResponseBlockDetail> data = mMapper.getBlockDetailList(key ,page * PAGE_COUNT, PAGE_COUNT);
+//        if (data != null) {
+//            Collections.reverse(data);
+//        }
+
+        ResponseInfo<ResponseBlockDetailList> result = new ResponseInfo<>();
+        result.setData(new ResponseBlockDetailList(count, data));
         return result;
     }
 }

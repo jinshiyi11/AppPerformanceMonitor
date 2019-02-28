@@ -3,7 +3,7 @@ package com.seagle.performance.performance.entity;
 /**
  *
  */
-public class ResponseBlockInfo {
+public class ResponseBlockDetail {
     private long mId;
     private String mStackTrace;
     private int mBlockTime;

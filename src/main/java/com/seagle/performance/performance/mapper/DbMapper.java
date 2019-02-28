@@ -1,5 +1,6 @@
 package com.seagle.performance.performance.mapper;
 
+import com.seagle.performance.performance.entity.ResponseBlockDetail;
 import com.seagle.performance.performance.entity.ResponseBlockInfo;
 import com.seagle.performance.performance.entity.UploadBlockInfo;
 import org.apache.ibatis.annotations.*;
@@ -21,16 +22,31 @@ public interface DbMapper {
     @Select("SELECT COUNT(*) FROM (SELECT id FROM blockInfo group by `key`) a;")
     int getBlockInfoCount();
 
+    @Select("SELECT COUNT(*) FROM (SELECT id FROM blockInfo WHERE `key`=#{key}) a;")
+    int getBlockInfoCountByKey(@Param("key") String key);
+
     @SelectProvider(type = SqlBuilder.class, method = "buildBlockInfoListSql")
     @Results({
             @Result(id = true, property = "mId", column = "id"),
             @Result(property = "mStackTrace", column = "stack"),
             @Result(property = "mBlockTime", column = "blockTime"),
-            @Result(property = "mInsertTime", column = "insert_time", typeHandler = TimeHandler.class),
+            @Result(property = "mInsertTime", column = "insert_time"),
             @Result(property = "mOccurCount", column = "occurCount")
     })
     List<ResponseBlockInfo> getBlockInfoList(@Param("start") int start, @Param("count") int count);
 
+    @Select("SELECT `key` FROM blockInfo WHERE id=#{id}")
+    String getBlockKey(@Param("id") int id);
+
+    @Select("SELECT * FROM blockInfo WHERE `key`=#{key} ORDER BY id DESC LIMIT #{start},#{pageCount}")
+    @Results({
+            @Result(id = true, property = "mId", column = "id"),
+            @Result(property = "mStackTrace", column = "stack"),
+            @Result(property = "mBlockTime", column = "blockTime"),
+            @Result(property = "mInsertTime", column = "insert_time"),
+            @Result(property = "mOccurCount", column = "occurCount")
+    })
+    List<ResponseBlockDetail> getBlockDetailList(@Param("key") String key, @Param("start") int start, @Param("pageCount") int pageCount);
 
     class SqlBuilder {
         public String buildBlockInfoListSql(@Param("start") int start, @Param("count") int count) {
