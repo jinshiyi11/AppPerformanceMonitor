@@ -10,6 +10,9 @@ id int(10) NOT NULL AUTO_INCREMENT,
 `key` varchar(128) NOT NULL,
 stack TEXT NOT NULL,
 blockTime int(10),
+model TEXT,
+versionName TEXT,
+versionCode int,
 insert_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
 PRIMARY KEY (`id`)
 );

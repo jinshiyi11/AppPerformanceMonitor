@@ -29,6 +29,9 @@ public class BlockController {
             @RequestParam("version") int version,
             @RequestParam("stackTrace") String stackTrace,
             @RequestParam("blockTime") int blockTime,
+            @RequestParam("model") String model,
+            @RequestParam("versionName") String versionName,
+            @RequestParam("versionCode") int versionCode,
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         UploadBlockInfo blockInfo = new UploadBlockInfo();
@@ -36,6 +39,9 @@ public class BlockController {
         blockInfo.setKey(key);
         blockInfo.setStackTrace(stackTrace);
         blockInfo.setBlockTime(blockTime);
+        blockInfo.setModel(model);
+        blockInfo.setVersionName(versionName);
+        blockInfo.setVersionCode(versionCode);
         mMapper.addBlockInfo(blockInfo);
         return new ResponseInfo(ErrorCode.ERROR_SUCCESS);
     }

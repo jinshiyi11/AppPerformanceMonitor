@@ -9,6 +9,9 @@ public class ResponseBlockDetail {
     private int mBlockTime;
     private String mInsertTime;
     private int mOccurCount;
+    private String mModel;
+    private String mVersionName;
+    private int mVersionCode;
 
     public long getId() {
         return mId;
@@ -48,5 +51,29 @@ public class ResponseBlockDetail {
 
     public void setOccurCount(int occurCount) {
         this.mOccurCount = occurCount;
+    }
+
+    public String getModel() {
+        return mModel;
+    }
+
+    public void setModel(String model) {
+        this.mModel = model;
+    }
+
+    public String getVersionName() {
+        return mVersionName;
+    }
+
+    public void setVersionName(String versionName) {
+        this.mVersionName = versionName;
+    }
+
+    public int getVersionCode() {
+        return mVersionCode;
+    }
+
+    public void setVersionCode(int versionCode) {
+        this.mVersionCode = versionCode;
     }
 }

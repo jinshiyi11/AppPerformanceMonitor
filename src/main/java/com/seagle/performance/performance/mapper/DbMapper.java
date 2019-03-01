@@ -15,8 +15,8 @@ public interface DbMapper {
     @Select("SELECT EXISTS(SELECT 1 FROM blockInfo WHERE key=#{key})")
     boolean exists(@Param("key") String key);
 
-    @Insert("INSERT INTO blockInfo(`key`,stack,blockTime) VALUES(" +
-            "#{blockInfo.mKey},#{blockInfo.mStackTrace},#{blockInfo.mBlockTime})")
+    @Insert("INSERT INTO blockInfo(`key`,stack,blockTime,model,versionName,versionCode) VALUES(" +
+            "#{blockInfo.mKey},#{blockInfo.mStackTrace},#{blockInfo.mBlockTime},#{blockInfo.mModel},#{blockInfo.mVersionName},#{blockInfo.mVersionCode})")
     void addBlockInfo(@Param("blockInfo") UploadBlockInfo blockInfo);
 
     @Select("SELECT COUNT(*) FROM (SELECT id FROM blockInfo group by `key`) a;")
@@ -44,7 +44,10 @@ public interface DbMapper {
             @Result(property = "mStackTrace", column = "stack"),
             @Result(property = "mBlockTime", column = "blockTime"),
             @Result(property = "mInsertTime", column = "insert_time"),
-            @Result(property = "mOccurCount", column = "occurCount")
+            @Result(property = "mOccurCount", column = "occurCount"),
+            @Result(property = "mModel", column = "model"),
+            @Result(property = "mVersionName", column = "versionName"),
+            @Result(property = "mVersionCode", column = "versionCode")
     })
     List<ResponseBlockDetail> getBlockDetailList(@Param("key") String key, @Param("start") int start, @Param("pageCount") int pageCount);
 
