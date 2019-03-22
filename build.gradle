@@ -6,16 +6,29 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.seagle.performance'
-version = '0.0.1-SNAPSHOT'
+//version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+apply plugin: 'war'
+
+war {
+	baseName = 'myapp'
+//	version =  '0.1.0'
+}
+
 repositories {
+	maven {url "http://maven.aliyun.com/nexus/content/groups/public/"}
 	mavenCentral()
 }
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.0'
+    //生成tomcat war包
+	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
 	implementation 'com.google.code.gson:gson:2.8.2'
 	implementation 'com.squareup.okhttp3:okhttp:3.9.0'
