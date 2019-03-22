@@ -28,7 +28,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.0'
     //生成tomcat war包
-	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+//	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
 	implementation 'com.google.code.gson:gson:2.8.2'
 	implementation 'com.squareup.okhttp3:okhttp:3.9.0'

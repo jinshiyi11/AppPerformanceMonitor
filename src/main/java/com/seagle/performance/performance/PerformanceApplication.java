@@ -10,16 +10,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
-public class PerformanceApplication extends SpringBootServletInitializer {
+public class PerformanceApplication/* extends SpringBootServletInitializer*/ {
 
     public static void main(String[] args) {
         SpringApplication.run(PerformanceApplication.class, args);
     }
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(PerformanceApplication.class);
-    }
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//        return application.sources(PerformanceApplication.class);
+//    }
 
     //处理跨域问题
     @Bean
