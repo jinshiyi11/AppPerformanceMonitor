@@ -1,17 +1,35 @@
 package com.seagle.performance.performance.leak.db;
 
-import com.seagle.performance.performance.leak.bean.UploadLeakInfo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.seagle.performance.performance.entity.ResponseBlockInfo;
+import com.seagle.performance.performance.leak.bean.ResponseMatrixLeakInfo;
+import com.seagle.performance.performance.leak.bean.UploadMatrixLeakInfo;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface LeakMapper {
-    @Select("SELECT EXISTS(SELECT 1 FROM leakInfo WHERE key=#{key})")
-    boolean exists(@Param("key") String key);
+    @Insert("INSERT INTO matrixLeakInfo(activity,tag,process,occurTime) VALUES(" +
+            "#{leakInfo.mActivity},#{leakInfo.mTag},#{leakInfo.mProcess},#{leakInfo.mOccurTime})")
+    void addMatrixBlockInfo(@Param("leakInfo") UploadMatrixLeakInfo leakInfo);
 
-    @Insert("INSERT INTO leakInfo(`key`,stack,blockTime,model,versionName,versionCode) VALUES(" +
-            "#{leakInfo.mKey},#{leakInfo.mStackTrace},#{leakInfo.mBlockTime},#{leakInfo.mModel},#{leakInfo.mVersionName},#{leakInfo.mVersionCode})")
-    void addBlockInfo(@Param("leakInfo") UploadLeakInfo leakInfo);
+    @Select("SELECT COUNT(*) FROM matrixLeakInfo;")
+    int getMatrixLeakInfoCount();
+
+    @SelectProvider(type = LeakMapper.SqlBuilder.class, method = "buildMatrixLeakInfoListSql")
+    @Results({
+            @Result(id = true, property = "mId", column = "id"),
+            @Result(property = "mActivity", column = "activity"),
+            @Result(property = "mTag", column = "tag"),
+            @Result(property = "mProcess", column = "process"),
+            @Result(property = "mOccurTime", column = "occurTime")
+    })
+    List<ResponseMatrixLeakInfo> getMatrixLeakInfoList(@Param("start") int start, @Param("count") int count);
+
+    class SqlBuilder {
+        public String buildMatrixLeakInfoListSql(@Param("start") int start, @Param("count") int count) {
+            String sql = "SELECT id,activity, tag, process, occurTime FROM matrixLeakInfo ORDER BY id DESC LIMIT " + start + "," + count;
+            return sql;
+        }
+    }
 }

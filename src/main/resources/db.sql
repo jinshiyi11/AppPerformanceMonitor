@@ -19,8 +19,19 @@ PRIMARY KEY (`id`)
 
 CREATE INDEX key_blockInfo_index ON blockInfo(`key`);
 
-#leak表
-CREATE TABLE IF NOT EXISTS leakInfo(
+#matrix内存泄漏表
+CREATE TABLE IF NOT EXISTS matrixLeakInfo(
+id int(10) NOT NULL AUTO_INCREMENT,
+activity TEXT,
+tag TEXT,
+process TEXT,
+occurTime BIGINT,
+insertTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+PRIMARY KEY (`id`)
+);
+
+#leakCanary内存泄漏表
+CREATE TABLE IF NOT EXISTS leakCanaryInfo(
 id int(10) NOT NULL AUTO_INCREMENT,
 `key` varchar(128) NOT NULL,
 stack TEXT NOT NULL,
