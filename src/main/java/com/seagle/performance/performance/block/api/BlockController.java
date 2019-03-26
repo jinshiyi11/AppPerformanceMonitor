@@ -1,7 +1,7 @@
-package com.seagle.performance.performance.api;
+package com.seagle.performance.performance.block.api;
 
 import com.seagle.performance.performance.entity.*;
-import com.seagle.performance.performance.mapper.DbMapper;
+import com.seagle.performance.performance.block.db.BlockMapper;
 import com.seagle.performance.performance.response.ErrorCode;
 import com.seagle.performance.performance.response.ResponseInfo;
 import com.seagle.performance.performance.util.StackTraceUtil;
@@ -21,7 +21,7 @@ public class BlockController {
     private static final int PAGE_COUNT = 10;
 
     @Autowired
-    private DbMapper mMapper;
+    private BlockMapper mMapper;
 
     @PostMapping("/api/uploadBlockInfo")
     @ResponseBody

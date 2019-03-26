@@ -1,4 +1,4 @@
-package com.seagle.performance.performance.mapper;
+package com.seagle.performance.performance.block.db;
 
 import com.seagle.performance.performance.entity.ResponseBlockDetail;
 import com.seagle.performance.performance.entity.ResponseBlockInfo;
@@ -11,7 +11,7 @@ import java.util.List;
  *
  */
 @Mapper
-public interface DbMapper {
+public interface BlockMapper {
     @Select("SELECT EXISTS(SELECT 1 FROM blockInfo WHERE key=#{key})")
     boolean exists(@Param("key") String key);
 
