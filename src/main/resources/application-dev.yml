@@ -1,5 +1,5 @@
 ﻿server:
-  port: 80
+  port: 81
 logging:
   level:
     # Set DEBUG level to activate our log-filter to log each request and response
