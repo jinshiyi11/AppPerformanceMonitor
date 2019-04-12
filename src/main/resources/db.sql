@@ -33,12 +33,26 @@ PRIMARY KEY (`id`)
 #leakCanary内存泄漏表
 CREATE TABLE IF NOT EXISTS leakCanaryInfo(
 id int(10) NOT NULL AUTO_INCREMENT,
-`key` varchar(128) NOT NULL,
-stack TEXT NOT NULL,
-blockTime int(10),
+`key` varchar(128),
+stack TEXT,
 model TEXT,
 versionName TEXT,
 versionCode int,
-insert_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+info TEXT,
+insertTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+PRIMARY KEY (`id`)
+);
+
+#io问题
+CREATE TABLE IF NOT EXISTS ioLeakInfo(
+id int(10) NOT NULL AUTO_INCREMENT,
+`key` varchar(128),
+stack TEXT,
+process TEXT,
+model TEXT,
+versionName TEXT,
+versionCode int,
+occurTime BIGINT,
+insertTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
 PRIMARY KEY (`id`)
 );

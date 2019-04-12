@@ -7,7 +7,7 @@ spring:
     auto: true
   datasource:
         driver-class-nickName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/stack?useUnicode=true&characterEncoding=utf-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/stack?useUnicode=true&characterEncoding=utf-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
         username: stack_user
         password: test321
 
